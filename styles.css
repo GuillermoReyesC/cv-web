@@ -1,0 +1,251 @@
+@import url('http://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+
+
+}
+
+body {
+    background: #4d87bd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    min-height: 1600px;
+    margin: 50px;
+    background: #fff;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    box-shadow: 0 35px 55px rgba(0, 0, 0, 0.1);
+
+}
+
+.container .left_side {
+    position: relative;
+    background: #003147;
+    padding: 40px;
+
+}
+
+.container .right_side {
+    position: relative;
+    background: #fff;
+    padding: 40px;
+}
+
+.cv_text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+}
+
+.cv_text .img_box {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border-radius: 70%;
+    overflow: hidden;
+
+
+}
+
+.cv_text .img_box img {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cv_text h2 {
+    color: #fff;
+    font-size: 1.5em;
+    margin-top: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.4em;
+}
+
+.cv_text h2 span {
+    font-size: 0.8em;
+    color: #fff;
+    font-weight: 400;
+
+
+}
+
+.contact_info {
+    padding-top: 40px;
+    ;
+}
+
+.contact_info li a {
+    text-decoration: none;
+}
+
+.title {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+
+
+}
+
+.contact_info ul {
+    position: relative;
+}
+
+.contact_info ul li {
+    position: relative;
+    list-style: none;
+
+    cursor: pointer;
+}
+
+.contact_info ul li .icon {
+    display: inline-block;
+    width: 20px;
+    font-size: 18px;
+    color: #237398;
+
+}
+
+.contact_info ul li span {
+    font-weight: 300;
+    color: #fff
+}
+
+.contact_info_education li {
+    margin-bottom: 20px;
+    list-style: none;
+    text-decoration: none;
+
+}
+
+.contact_info_education li h5 {
+    color: rgb(63, 126, 174);
+    font-weight: 500;
+    margin-bottom: 10px;
+    list-style: none;
+    text-decoration: none;
+}
+
+.contact_info_education li h4 {
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 10px;
+    list-style: none;
+    text-decoration: none;
+}
+
+.contact_info_education li span {
+    color: #fff;
+    font-weight: 200;
+    list-style: none;
+}
+
+.contact_info_education li p {
+    color: #fff;
+    font-weight: 200;
+    list-style: none;
+}
+
+.contact_info_education li p a {
+    color: #fff;
+    font-weight: 200;
+    list-style: none;
+    text-decoration: none;
+}
+
+.contact_info_education li a {
+    color: #fff;
+    font-weight: 200;
+    list-style: none;
+    text-decoration: none;
+}
+
+.contact_info_education ul li h4 i {
+    font-size: 0.9em;
+    color: #fff;
+    margin-right: 10px;
+    font-weight: 400;
+    list-style: none;
+
+}
+
+.contact_info_languages ul {
+
+    list-style: none;
+}
+
+.contact_info_languages ul li span {
+    color: #fff;
+    font-weight: 200;
+    list-style: none;
+}
+
+.text {
+    color: #fff;
+    font-weight: 200;
+    list-style: none;
+}
+
+.contact_info_languages .percent {
+    position: relative;
+    width: 100%;
+    height:6px;
+    background: #081921;
+    display: block;
+    margin-top: 5px;
+}
+
+.contact_info_languages .percent div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: rgb(63, 126, 174);
+    transition: width 0.5s;
+}
+
+.container right_side {
+    position: relative;
+    background: #fff;
+    padding: 40px;
+}
+
+.about {
+    margin-bottom: 50px
+}
+.about:last-child {
+    margin-bottom: 0;
+}
+.title2 {
+    color: #003147;
+    margin-top: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+p {
+    color: #333;
+    
+}
