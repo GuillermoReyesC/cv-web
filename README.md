@@ -4,4 +4,4 @@
 #  si os sirve copien el codigo y lo pueden usar en su sitio web o portafolio.
 #  se recomienta tomar el ejemplo y desarrolar uno propio, pero para que reinventar la rueda?
 #  espero que os guste.
-#  ¯\_(ツ)_/¯
+¯\_(ツ)_/¯
