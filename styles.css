@@ -13,7 +13,7 @@
 }
 
 body {
-    background: #4d87bd;
+    background: #2f6598;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,7 +35,7 @@ body {
 
 .container .left_side {
     position: relative;
-    background: #003147;
+    background: #01293c;
     padding: 40px;
 
 }
@@ -236,8 +236,8 @@ body {
 
 
 .about {
-    margin-top: 10px;
-    margin-bottom: 50px
+    margin-top: 5px;
+    margin-bottom: 40px
 }
 .about:last-child {
     margin-bottom: 0;
@@ -246,7 +246,7 @@ body {
     color: #003147;
     margin-top: 20px;
     letter-spacing: 1px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 p {
@@ -340,6 +340,11 @@ h4 {
     width: 20px;     
 }
 
+.interest ul li .fa-brands{
+    color:#03a9f4;  
+    font-size: 15px;
+    width: 20px;     
+}
 /* responsive */
 
 @media(max-width:1000px){
