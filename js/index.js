@@ -33,7 +33,14 @@ const downloadPDF = () => {
 
     const element = document.querySelector('.container');
     
-    // Calculamos la proporción exacta del contenedor para que encaje en 1 sola página
+    // Guardamos los estilos originales para no romper el layout permanentemente
+    const originalWidth = element.style.width;
+    const originalMaxWidth = element.style.maxWidth;
+
+    // Forzamos el ancho a escritorio (1100px) momentáneamente
+    element.style.width = '1100px';
+    element.style.maxWidth = '1100px';
+
     const width = element.offsetWidth;
     const height = element.offsetHeight;
     const ratio = height / width;
@@ -46,12 +53,14 @@ const downloadPDF = () => {
         margin:       0,
         filename:     'Guillermo_Reyes_CV.pdf',
         image:        { type: 'jpeg', quality: 1 },
-        html2canvas:  { scale: 2, useCORS: true },
+        html2canvas:  { scale: 2, useCORS: true, windowWidth: 1100 },
         jsPDF:        { unit: 'mm', format: [pdfWidth, pdfHeight], orientation: 'portrait' }
     };
 
     html2pdf().set(opt).from(element).save().then(() => {
         $("#message").text("¡Descarga completada!");
+        element.style.width = originalWidth;
+        element.style.maxWidth = originalMaxWidth;
         
         setTimeout(() => {
             $("#overlay").hide();
@@ -60,6 +69,8 @@ const downloadPDF = () => {
     }).catch(err => {
         console.error("Error al generar PDF:", err);
         $("#message").text("Error al generar el PDF.");
+        element.style.width = originalWidth;
+        element.style.maxWidth = originalMaxWidth;
 
         
         setTimeout(() => {
