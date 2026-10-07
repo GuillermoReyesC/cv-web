@@ -38,21 +38,21 @@ const downloadPDF = () => {
 
     const element = document.querySelector('.container');
     
-    // Obtenemos las dimensiones en pixeles
-    const w_px = element.offsetWidth;
-    const h_px = element.offsetHeight;
-
-    // jsPDF es muy estable con milímetros. Convertimos los píxeles a mm (1 px = 0.264583 mm)
-    // Le damos un margen pequeñísimo extra de alto para que no haya desbordamiento
-    const w_mm = w_px * 0.264583;
-    const h_mm = (h_px + 20) * 0.264583;
+    // Calculamos la proporción exacta del contenedor para que encaje en 1 sola página
+    const width = element.offsetWidth;
+    const height = element.offsetHeight;
+    const ratio = height / width;
+    
+    // Fijamos el ancho estándar (ej. 210mm) y calculamos el alto proporcional
+    const pdfWidth = 210; 
+    const pdfHeight = pdfWidth * ratio;
 
     const opt = {
         margin:       0,
         filename:     'Guillermo_Reyes_CV_Eng.pdf',
         image:        { type: 'jpeg', quality: 1 },
         html2canvas:  { scale: 2, useCORS: true },
-        jsPDF:        { unit: 'mm', format: [w_mm, h_mm], orientation: 'portrait' }
+        jsPDF:        { unit: 'mm', format: [pdfWidth, pdfHeight], orientation: 'portrait' }
     };
 
     // Usar html2pdf

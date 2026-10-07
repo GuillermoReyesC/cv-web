@@ -33,24 +33,25 @@ const downloadPDF = () => {
 
     const element = document.querySelector('.container');
     
-    // Guardamos el ancho original
-    const originalWidth = element.style.width;
-    // Forzamos 1100px para garantizar la vista de escritorio perfecta
-    element.style.width = '1100px';
+    // Calculamos la proporción exacta del contenedor para que encaje en 1 sola página
+    const width = element.offsetWidth;
+    const height = element.offsetHeight;
+    const ratio = height / width;
     
+    // Fijamos el ancho estándar (ej. 210mm) y calculamos el alto proporcional
+    const pdfWidth = 210; 
+    const pdfHeight = pdfWidth * ratio;
+
     const opt = {
         margin:       0,
         filename:     'Guillermo_Reyes_CV.pdf',
         image:        { type: 'jpeg', quality: 1 },
-        html2canvas:  { scale: 2, useCORS: true, windowWidth: 1200 },
-        // Tamaño en pulgadas (11.5 x 17.5 pulgadas = ~1100 x 1680 píxeles). Ideal para la vista actual.
-        jsPDF:        { unit: 'in', format: [11.5, 17.5], orientation: 'portrait' }
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'mm', format: [pdfWidth, pdfHeight], orientation: 'portrait' }
     };
 
     html2pdf().set(opt).from(element).save().then(() => {
         $("#message").text("¡Descarga completada!");
-        // Restauramos el ancho
-        element.style.width = originalWidth;
         
         setTimeout(() => {
             $("#overlay").hide();
@@ -59,7 +60,7 @@ const downloadPDF = () => {
     }).catch(err => {
         console.error("Error al generar PDF:", err);
         $("#message").text("Error al generar el PDF.");
-        element.style.width = originalWidth;
+
         
         setTimeout(() => {
             $("#overlay").hide();
