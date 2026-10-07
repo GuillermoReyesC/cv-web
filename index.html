@@ -1,329 +1,251 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>web cv </title>
+    <title>Guillermo Reyes - Web CV</title>
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://unpkg.com/html2pdf.js/dist/html2pdf.bundle.js"></script>
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- html2pdf.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Contenedor de filtro -->
-<div id="overlay" style="display: none;">
-    <div id="message" class="overlay-message">Descargando...</div>
-</div>
+    <!-- Contenedor de filtro/carga -->
+    <div id="overlay" style="display: none;">
+        <div class="overlay-content">
+            <div class="loader"></div>
+            <div id="message" class="overlay-message">Generando PDF...</div>
+        </div>
+    </div>
 
-    <!-- botonera flotante -->
+    <!-- Botonera flotante -->
     <div id="floating-button">
-        <span>☰</span>
+        <i class="fa fa-bars"></i>
         <div id="popup-menu">
             <button id="btn-english">English <i class="fa fa-language" aria-hidden="true"></i></button>
             <button id="btn-download-pdf">Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
     </div>
+
     <div class="container">
         
-           <div class="left_side">
+        <!-- SIDEBAR IZQUIERDO -->
+        <div class="left_side">
             <div class="cv_text">
                 <div class="img_box">
-                    <img src="img/me_again.jpg" alt="">
+                    <img src="img/me_again.jpg" alt="Guillermo Reyes">
                 </div>
-                <h2 >Guillermo Reyes <br/>Campos<br /> <span>Full-Stack Developer</span></h2>
+                <h2>Guillermo Reyes <br/>Campos<br /> <span>Full-Stack Developer</span></h2>
+            </div>
 
-           </div>
-
-           <div class="contact_info">
-                <h3 class="title">Información</h3>
+            <div class="contact_info">
+                <h3 class="title">Información de Contacto</h3>
                 <ul>
                     <li>
                         <span class="icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
-                       <a href="tel:+56979504816"> <span class="info">+56 (9)79504816</span></a>
-
+                        <a href="tel:+56979504816">+56 (9) 7950 4816</a>
                     </li>
                     <li>
-                        <span class="icon"><i class="fa fa-map-marker icon"></i></span> 
-                       <a href="https://goo.gl/maps/bBSSfWJdSSdRRAMu7"><span class="info">Chillán, Chile</span></a>
-
+                        <span class="icon"><i class="fa fa-map-marker-alt"></i></span> 
+                        <a href="https://goo.gl/maps/bBSSfWJdSSdRRAMu7" target="_blank">Chillán, Chile</a>
                     </li>
                     <li>
-                        <span class="icon"><i class="fa fa-envelope"  aria-hidden="true"></i></span>
-                       <a href="mailto:guillermo.a.reyes.c@gmail.com"><span class="info">guillermo.a.reyes.c@gmail.com</span></a>
-
+                        <span class="icon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                        <a href="mailto:guillermo.a.reyes.c@gmail.com">guillermo.a.reyes.c@gmail.com</a>
                     </li>
-                    <!-- <li>
-                        <span class="icon"><i class="fa fa-globe"  aria-hidden="true"></i></span>
-                        <a href="https://www.ultradesk.cl"><span class="info">www.ultradesk.cl</span></a>
-
-                    </li> -->
                     <li>
                         <span class="icon"><i class="fa-brands fa-github"></i></span>
-                        <a href="https://github.com/GuillermoReyesC"><span class="info">github.com/GuillermoReyesC</span></a>
-
+                        <a href="https://github.com/GuillermoReyesC" target="_blank">github.com/GuillermoReyesC</a>
                     </li>
                     <li>
-                        <span class="icon"><i class="fa-brands fa-linkedin"  aria-hidden="true"></i></span>
-                        <a href="https://www.linkedin.com/in/guillermo-reyes-dev/"><span class="info">guillermo-reyes-dev</span></a>
-
+                        <span class="icon"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></span>
+                        <a href="https://www.linkedin.com/in/guillermo-reyes-dev/" target="_blank">guillermo-reyes-dev</a>
                     </li>
-
-                        
                 </ul>
-           </div>
-
-           <div class="contact_info_education"><br/>
-            <h3 class="title">Estudios y Cursos</h3>
-            <ul>
-                <li>
-                    <h5>2013 - 2019 </h5>
-                    <a href="https://drive.google.com/file/d/1HWPntiqg0unUB7FX4vvL5e9plJcgdjLe/view?usp=sharing"><h4><i class="fa fa-graduation-cap"></i></i>Ingenieria en Informatica</h4></a>
-                    <h4> Universidad Tecnologica de Chile Inacap <i class="italic-text">Finalizada con Éxito</i> </h4>
-                    <h5> Grado académico: <i class="italic-text">Licenciatura en Informatica</i> </h5>
-                    <span class="icon"><i class="fa fa-map-marker icon"></i></span> 
-                        <span class="info">Chillán, Chile</span>
-
-                </li>
-                <li>
-                    <h5>2010 - 2011 </h5>
-                    <h4><i class="fa fa-graduation-cap"  aria-hidden="true"></i>Trabajo social</h4>
-                    <h4> Universidad Tecnológica de Chile Inacap <i class="italic-text">1 año cursado (2 semestres)</i> </h4>
-                    <span class="icon"><i class="fa fa-map-marker icon"></i></span> 
-                    <span class="info">Chillán, Chile</span>
-
-                </li>
-                <li>
-                    <h5> may - 2021 </h5>
-                    <a href="https://www.udemy.com/certificate/UC-c3e6d2e7-a212-471e-9d74-5b7b15c84e90/"><h4><i class="fa fa-graduation-cap"  aria-hidden="true"></i> React + Firebase en<br/> Udemy </h4></a>
-                    <p>Certificación de curso completado con éxito.</p>
-                   
-                </li>    
-                <li>
-                    <h5> Feb - 2020 </h5>
-                    <a href="https://www.freecodecamp.org/certification/guillermoreyesc/responsive-web-design"><h4><i class="fa fa-graduation-cap"  aria-hidden="true"></i> Responsive Web Design en<br/> Freecodecamp </h4></a>
-                    <p>Certificación de Desarrollador - Diseño Web.</p>
-                </li>
-             
-                <li>
-                    <h5> Feb 12 - 2024 </h5>
-                    <a href="https://cert.efset.org/4fRCu5"><h4><i class="fa fa-graduation-cap"  aria-hidden="true"></i> EF SET English Certificate 67/100 (C1 Advanced) <br/> EFSET</h4></a>
-                    <p>Curso estandarizado de inglés de EFSET</p>
-                </li>
-                <br><br>
-            </ul>
-       </div>
-       <div class="contact_info_languages"><br/>
-        <h3 class="title">Idiomas</h3>
-        <ul>
-            <li>
-                <span class="icon"><i class="fa fa-language" aria-hidden="true"></i></span>
-                <span class="text">Español <i class="italic-text">(Nativo)</i></span>
-                <span class="percent">
-                    <div style="width: 100%;"></div>
-                </span>
-            </li>
-            <br/>
-            <li>
-                <span class="icon"><i class="fa fa-language" aria-hidden="true"></i></span>
-                <span class="text">Ingles C1<i class="italic-text">(Avanzado)</i></span>
-                <span class="percent">
-                    <div style="width: 90%;"></div>
-                </span>
-            </li>
-         </ul>
-        </div>
-                
-           
-        </div>
-        
-        <div class="right_side">
-            <div class="about">
-        <h2 class="title2">Acerca de mí</h2>
-        <p>
-            Mi nombre es Guillermo, soy Desarrollador FullStack especializado en C# y ASP.NET. <br/>            
-            Llevo al menos 4 años desarrollando software, Actualmente soy consultor en C# y SQL Server. para la empresa <b>Viumi Ltda.</b> <br>
-            Actualmente estoy buscando oportunidades en donde pueda aplicar mis conocimientos, aportar valor y por supuesto, seguir programando.
-        
-         </p>
-
             </div>
+
+            <div class="contact_info_education">
+                <h3 class="title">Estudios y Certificaciones</h3>
+                <ul>
+                    <li>
+                        <h5>2013 - 2019</h5>
+                        <h4><a href="https://drive.google.com/file/d/1HWPntiqg0unUB7FX4vvL5e9plJcgdjLe/view?usp=sharing" target="_blank"><i class="fa fa-graduation-cap"></i>Ingeniería en Informática</a></h4>
+                        <p>Universidad Tecnológica de Chile Inacap <span class="italic-text">(Finalizada)</span></p>
+                        <p>Grado: Licenciatura en Informática</p>
+                    </li>
+                    <li>
+                        <h5>Feb 2024</h5>
+                        <h4><a href="https://cert.efset.org/4fRCu5" target="_blank"><i class="fa fa-certificate"></i>EF SET English C1 Advanced</a></h4>
+                        <p>Certificado Estandarizado de Inglés</p>
+                    </li>
+                    <li>
+                        <h5>May 2021</h5>
+                        <h4><a href="https://www.udemy.com/certificate/UC-c3e6d2e7-a212-471e-9d74-5b7b15c84e90/" target="_blank"><i class="fa fa-certificate"></i>React + Firebase</a></h4>
+                        <p>Udemy - Certificación completada</p>
+                    </li>    
+                    <li>
+                        <h5>Feb 2020</h5>
+                        <h4><a href="https://www.freecodecamp.org/certification/guillermoreyesc/responsive-web-design" target="_blank"><i class="fa fa-certificate"></i>Responsive Web Design</a></h4>
+                        <p>FreeCodeCamp</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="contact_info_languages">
+                <h3 class="title">Idiomas</h3>
+                <ul class="clean-list">
+                    <li>
+                        <span class="icon"><i class="fa fa-language"></i></span>
+                        <span class="text">Español <span class="italic-text">(Nativo)</span></span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-language"></i></span>
+                        <span class="text">Inglés <span class="italic-text">C1 Avanzado (EF SET)</span></span>
+                    </li>
+                 </ul>
+            </div>
+        </div>
+        
+        <!-- CONTENIDO PRINCIPAL (DERECHA) -->
+        <div class="right_side">
+            
             <div class="about">
-                <h2 class="title2">Experiencia</h2>
+                <h2 class="title2">Perfil Profesional</h2>
+                <p>
+                    Desarrollador FullStack especializado en el ecosistema Microsoft (<span class="badge">C#</span>, <span class="badge">ASP.NET Core</span>, <span class="badge">.NET Framework</span>). 
+                    Cuento con más de 4 años de experiencia creando soluciones web corporativas, integración de sistemas y procesos ETL robustos. 
+                    Destaco por el uso de estas tecnologías en conjunto con bases de datos relacionales como <span class="badge">SQL Server</span>, optimizando el acceso a datos a través de Stored Procedures y consultas complejas.
+                    Actualmente formo parte del equipo en <strong>Viumi Ltda.</strong> como Desarrollador Fullstack, aportando soluciones escalables y cumpliendo a cabalidad con las tareas y proyectos encomendados.
+                </p>
+            </div>
+
+            <div class="about">
+                <h2 class="title2">Experiencia Laboral</h2>
+                
                 <div class="box">
                     <div class="year_company">
-                        <small>Abr 2025 - Hoy</small>
-                        <h5>DATA ENGINEER<br/>(ETL | SQL SERVER | POWER BI ANALYST)</h5>
-                        <h5>VIUMI ltda.</h5>
+                        <small>Abr 2023 - Presente</small>
+                        <h5>VIUMI Ltda.</h5>
                     </div>
                     <div class="text">
-                        <h4> Desarrollador | Data Analyst </h4>
-                        <p>• Creacion y mantenimiento de informes y dashboards en <b>Power BI</b>.(Funciones DAX, Power Query,  Dashboards interactivos)</p>
-                        <p>• Creación de pipelines de datos para procesos (ETL) de datos utilizando <b>SQL Server Integration Services (SSIS)</b> y <b>SQL Server Management Studio (SSMS)</b><br/></p>
-                        <p>• Desarrollo de consultas SQL complejas para la manipulación y análisis de datos en <b>SQL Server</b>.</p>
-                        <p>• Maquetación Web desde <b>Figma</b> & <b>Adobe XD  </b><br />
-                        <p>• Desarrollo de apliciones web con <b>C#</b> y <b>ASP.NET Razor Pages</b>.<br /></p>
-                    
-
+                        <h4>Fullstack Developer & Data Engineer</h4>
+                        <p>• Desarrollo de aplicaciones web utilizando <span class="badge">.NET Framework 4.6</span> & <span class="badge">.NET Core</span>.</p>
+                        <p>• Desarrollo de backend y capas de acceso a datos utilizando principalmente <span class="badge">ADO.NET</span> y <span class="badge">Dapper</span>.</p>
+                        <p>• Diseño de pipelines y flujos (ETL) de datos usando paquetes DTSX en <span class="badge">SQL Server Integration Services (SSIS)</span>.</p>
+                        <p>• Desarrollo de consultas complejas, vistas y Stored Procedures en <span class="badge">SQL Server</span>.</p>
+                        <p>• Mantenimiento y desarrollo de aplicaciones web modulares con <span class="badge">C#</span> y <span class="badge">ASP.NET Razor Pages</span>.</p>
                     </div>
                 </div>
+
                 <div class="box">
                     <div class="year_company">
-                        <small>Nov 2022 - Mar 2025</small>
-                        <h5>Desarrollador<br/> Fullstack</h5>
-                        <h5>VIUMI ltda.</h5>
+                        <small>Nov 2022 - Mar 2023</small>
+                        <h5>VIUMI Ltda.</h5>
                     </div>
                     <div class="text">
-                        <h4> Desarrollador Fullstack </h4>
-                        <p>
-                        • Desarrollo de aplicaciones web con <b>C#</b>, <b>ASP.NET - Razor Pages</b><br/>
-                        • Maquetación Web desde <b>Figma</b> & <b>Adobe XD  </b><br />
-                        • Integración de API de <b>Mercadopago</b> y <b>Transbank</b> para gestion de pagos a traves del SDK y de su API<br />                       
-                        • Integración de API de <b>Chilexpress</b>  para gestión de envios automáticos, con las APIs de Chilexpress <br />
-                        • Desarrollo de apliciones web con C# y ASP.NET Razor Pages.<br />
-                        • Desarrollo de consultas SQL, Stored Procedures, Views entre otros, en SQL Server.<br />
-
-                    </p>
-
+                        <h4>Desarrollador Fullstack</h4>
+                        <p>• Integración de pasarelas de pago (API de <span class="badge">MercadoPago</span> y <span class="badge">Transbank</span>) asegurando transacciones fluidas.</p>
+                        <p>• Conexión con la API de <span class="badge">Chilexpress</span> para automatización en la generación de envíos.</p>
+                        <p>• Desarrollo Backend y Frontend con <span class="badge">C#</span>, <span class="badge">ASP.NET</span> y Javascript.</p>
                     </div>
                 </div>
+
                 <div class="box">
                     <div class="year_company">
                         <small>Sept 2020 - Dic 2022</small>
-                        <h5>Desarrollador<br/> Freelance</h5>
+                        <h5>Freelance</h5>
                     </div>
                     <div class="text">
-                        <h4> Desarrollador Web Freelance</h4>
-                        <p>
-                        • Desarrollo web utilizando Javascript, PHP & MySQL. <br />
-                        • Maquetacion Web con HTML y css & Bootstrap 4.6<br />
-                        • Desarrollo, configuracion y administración de servidores (cpanel). <br />
-                    </p>
-
+                        <h4>Desarrollador Web Freelance</h4>
+                        <p>• Desarrollo de aplicaciones web personalizadas con <span class="badge">PHP</span>, <span class="badge">MySQL</span> y <span class="badge">JavaScript</span>.</p>
+                        <p>• Creación de interfaces web responsivas usando <span class="badge">Bootstrap</span>, HTML5 y CSS3.</p>
+                        <p>• Administración de entornos de despliegue mediante <span class="badge">cPanel</span>.</p>
                     </div>
                 </div>
                 
                 <div class="box">
                     <div class="year_company">
-                        <small>Jun. 2020 - Sept. 2020</small>
-                        <h5>Escamet ltda.</h5>
+                        <small>Jun 2020 - Sept 2020</small>
+                        <h5>Escamet Ltda.</h5>
                     </div>
                     <div class="text">
-                        <h4>Desarrollador Junior Laravel & Vue.js<br/>Monitor de Plataforma </h4>
-                        <p>
-                        • Desarrollo  en Vue.js, y Laravel <i>(backend & frontend)</i><br />
-                        • Desarrollo de reportes de datos con los informes de la empresa.<br />
-                        • Desarrollo de módulo de exportación de documentos a PDF en Vue.js .<br />
+                        <h4>Desarrollador Junior Frontend/Backend</h4>
+                        <p>• Creación de módulos de reportes internos integrando <span class="badge">Laravel</span> y <span class="badge">Vue.js</span>.</p>
+                        <p>• Implementación de generación masiva de documentos y reportes a PDF.</p>
                     </div>
                 </div>
+                
                 <div class="box">
                     <div class="year_company">
-                        <small>Jul. 2019 - Nov. 2019</small>
-                        <h5>Abasolo <br>Vallejo S.A </h5>
+                        <small>Jul 2019 - Nov 2019</small>
+                        <h5>Abasolo Vallejo S.A</h5>
                     </div>
                     <div class="text">
-                        <h4> Junior PHP Developer </h4>
-                        <p>
-                        • Desarrollo en plataforma web con php, JavaScript & MySQL.<br />
-                        • Desarrollo de formularios con validaciones de datos. <br />
-                        • Modificacion de reportes para la visualizacion de datos con <b>Jquery</b> <br />
-                        • Actividades TI, soporte a los equipos de la empresa.</p>
+                        <h4>Junior PHP Developer</h4>
+                        <p>• Modificación de reportes para la visualización de métricas de la compañía utilizando <span class="badge">jQuery</span> y DataTables.</p>
+                        <p>• Soporte de nivel 1 a equipos internos (Helpdesk).</p>
                     </div>
                 </div>
-                <!-- <div class="box">
-                    <div class="year_company">
-                        <small>Nov. 2018 - Ene. 2019</small>
-                        <h5>FJGlobal Ltda. </h5><i>(Practica <br>Profesional)</i>
-                    </div>
-                    <div class="text">
-                        <h4> Diseño web / Maquetacion con Wordpress. </h4>
-                        <p>
-                        • Diseño y desarrollo de sitios web con Wordpress. <br />
-                        • Levantamiento de clientes, tomas de requerimientos de proyectos.<br />
-                        • Maquetacion en HTML y CSS. <br />
-                        • Actividades TI, soporte a los equipos de clientes particulares.</p>
-                    </div>
-                </div> -->
             </div>
+
             <div class="about skills">
-                <h2 class="title2">Habilidades Profesionales</h2>
-                <div class="box">
-                    <h4>C#</h4>
-                    <div class="percent">
-                        <div style="width: 40%;"></div>
+                <h2 class="title2">Habilidades Técnicas</h2>
+                
+                <div class="skills-category">
+                    <h4><i class="fa fa-code"></i> Full Stack Development</h4>
+                    <div class="badges-container">
+                        <span class="badge">C#</span>
+                        <span class="badge">.NET Core</span>
+                        <span class="badge">.NET Framework 4.6</span>
+                        <span class="badge">ASP.NET</span>
+                        <span class="badge">ADO.NET</span>
+                        <span class="badge">Dapper</span>
+                        <span class="badge">JavaScript</span>
+                        <span class="badge">React.js</span>
+                        <span class="badge">PHP / Laravel</span>
                     </div>
                 </div>
-                <div class="box">
-                    <h4>ASP.NET</h4>
-                    <div class="percent">
-                        <div style="width: 45%;"></div>
-                    </div>
-                </div>
-                <div class="box">
-                    <h4>JavaScript</h4>
-                    <div class="percent">
-                        <div style="width: 50%;"></div>
-                    </div>
-                </div>
-                <div class="box">
-                    <h4>jQuery</h4>
-                    <div class="percent">
-                        <div style="width: 40%;"></div>
-                    </div>
-                </div>
-                <div class="box">
-                    <h4>Laravel</h4>
-                    <div class="percent">
-                        <div style="width: 38%;"></div>
-                    </div>
-                </div>
-                <div class="box">
-                    <h4>React.js</h4>
-                    <div class="percent">
-                        <div style="width: 28%;"></div>
-                    </div>
-                </div>
- 
-                <div class="box">
-                    <h4>Git</h4>
-                    <div class="percent">
-                        <div style="width: 55%;"></div>
-                    </div>
-                </div>
-                <div class="box">
-                    <h4>SQL Server</h4>
-                    <div class="percent">
-                        <div style="width: 40%;"></div>
-                    </div>
-                </div>
-                <div class="box">
-                    <h4>MySQL</h4>
-                    <div class="percent">
-                        <div style="width: 40%;"></div>
-                    </div>
-                </div> 
 
+                <div class="skills-category">
+                    <h4><i class="fa fa-database"></i> Data Engineering & Bases de Datos</h4>
+                    <div class="badges-container">
+                        <span class="badge">SQL Server</span>
+                        <span class="badge">T-SQL</span>
+                        <span class="badge">SSIS</span>
+                        <span class="badge">ETL (DTSX / Visual Studio)</span>
+                        <span class="badge">MySQL</span>
+                    </div>
+                </div>
+
+                <div class="skills-category">
+                    <h4><i class="fa fa-tools"></i> Herramientas & Otros</h4>
+                    <div class="badges-container">
+                        <span class="badge">Git / GitHub</span>
+                        <span class="badge">Figma</span>
+                        <span class="badge">cPanel</span>
+                    </div>
+                </div>
             </div>
+
             <div class="interest">
-                <h2 class="title2">Intereses y Hobbies</h2>
+                <h2 class="title2">Intereses</h2>
                 <ul>
-                    <li><i class="fa fa-hdd-o" aria-hidden="true"></i> Electronica</li>
-                    <li><i class="fa fa-microchip" aria-hidden="true"></i> Hardware</li>
-                    <li><i class="fa fa-money"></i> Dinero</li>
-                    <li><i class="fa fa-rocket" aria-hidden="true"></i> Divulgación Científica</li>
-                    <li><i class="fa fa-server" aria-hidden="true"></i> Inteligencia Artificial</li>
-
-                    <li><i class="fa fa-gamepad" aria-hidden="true"></i> Gaming &<br/> E-sports</li>
-                    <!-- unity dev -->
-                     <li><i class="fa-brands fa-unity" aria-hidden="true"></i> Desarrollo con Unity 3D</li>
+                    <li><i class="fa fa-microchip"></i> Electrónica & Hardware</li>
+                    <li><i class="fa fa-chart-line"></i> Finanzas</li>
+                    <li><i class="fa fa-rocket"></i> Divulgación Científica</li>
+                    <li><i class="fa fa-robot"></i> Inteligencia Artificial</li>
+                    <li><i class="fa fa-gamepad"></i> Gaming & E-sports</li>
+                    <li><i class="fa-brands fa-unity"></i> Desarrollo Unity 3D</li>
                 </ul>
-                </div>
             </div>
+            
+        </div>
     </div>
-    <!-- Incluye jsPDF desde un CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    
     <script src="js/index.js"></script>
 </body>    
-
 </html>

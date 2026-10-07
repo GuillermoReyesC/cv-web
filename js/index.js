@@ -1,66 +1,73 @@
 $(document).ready(function() {
-   
+    // Animación de las barras de progreso al cargar
+    setTimeout(() => {
+        $('.percent div').each(function() {
+            let width = $(this).attr('data-width');
+            $(this).css('width', width);
+        });
+    }, 300);
 });
 
-/**funciones del boton y sdel popup de la descarga */
- // Mostrar/ocultar el popup al hacer clic en el botón flotante
- $("#floating-button").on("click", function() {
-    $("#popup-menu").css("display", $("#popup-menu").css("display") === "flex" ? "none" : "flex");
+// Mostrar/ocultar el popup al hacer clic o hover
+$("#floating-button").on("click mouseenter", function() {
+    $("#popup-menu").addClass("show");
 });
 
-// Mostrar el popup al hacer hover sobre el botón flotante
-$("#floating-button").on("mouseenter", function() {
-    $("#popup-menu").css("display", "flex");
-});
-
-
-// Ocultar el popup cuando se quita el hover del menú
 $("#popup-menu").on("mouseleave", function() {
-    $("#popup-menu").css("display", "none");
+    $("#popup-menu").removeClass("show");
 });
 
-
-
-// Ocultar el menú si el usuario hace clic fuera de él
 $(window).on("click", function(event) {
     if (!$(event.target).closest("#floating-button").length && !$(event.target).closest("#popup-menu").length) {
-        $("#popup-menu").css("display", "none");
+        $("#popup-menu").removeClass("show");
     }
 });
 
-// Función de "Descargar PDF"
+// Función para descargar el PDF dinámicamente
 $("#btn-download-pdf").on("click", function() {
     downloadPDF();
 });
-// Función para descargar el PDF
+
 const downloadPDF = () => {
-    const pdfUrl = "https://drive.google.com/uc?export=download&id=1S9ELqg7LgT9mUJHijJVyOIk8W8QDrLCc";
-   
-    // Mostrar el overlay con el mensaje de descarga
-    $("#overlay").show();
-    $("#message").text("Descargando, espere un momento...");
+    // Ocultar botón flotante para que no aparezca en el PDF
+    $("#floating-button").hide();
     
-    // Redirigir al enlace de descarga
-    window.location.href = pdfUrl;
+    // Mostrar overlay de carga
+    $("#overlay").css("display", "flex");
+    $("#message").text("Generando PDF de tu CV...");
+
+    const element = document.querySelector('.container');
     
-    // Cambiar el mensaje a "Listo!" cuando la descarga inicie
-    setTimeout(() => {
-        $("#message").text("Listo!");
-    }, 2000); // Cambiar el texto después de 2 segundos (puedes ajustarlo)
-    
-    // Ocultar el overlay después de 3 segundos para dar tiempo al mensaje "Listo!"
-    setTimeout(() => {
-        $("#overlay").hide();
-    }, 3500); // 3 segundos después de que se muestra el mensaje "Listo!"
+    // Configuraciones de html2pdf
+    const opt = {
+        margin:       [0, 0, 0, 0], // Margen 0
+        filename:     'Guillermo_Reyes_CV.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true }, // scale 2 mejora la calidad, useCORS para cargar imágenes/iconos externos
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    // Usar html2pdf
+    html2pdf().set(opt).from(element).save().then(() => {
+        // Al terminar:
+        $("#message").text("¡Descarga completada!");
+        
+        setTimeout(() => {
+            $("#overlay").hide();
+            // Restaurar botón flotante
+            $("#floating-button").show();
+        }, 1500);
+    }).catch(err => {
+        console.error("Error al generar PDF:", err);
+        $("#message").text("Error al generar el PDF.");
+        setTimeout(() => {
+            $("#overlay").hide();
+            $("#floating-button").show();
+        }, 2000);
+    });
 };
 
-
-// Función de "Traducir" (placeholder)
+// Función de "Traducir"
 $("#btn-english").on("click", function() {
-    EnglishMode()
-});
-const EnglishMode = () =>{
     window.location.href = "index.eng.html";
-};
-
-
+});
