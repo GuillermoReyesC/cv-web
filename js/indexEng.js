@@ -33,16 +33,22 @@ const downloadPDF = () => {
 
     const element = document.querySelector('.container');
     
+    // Guardamos el ancho original
+    const originalWidth = element.style.width;
+    // Forzamos 1100px para garantizar la vista de escritorio perfecta
+    element.style.width = '1100px';
+
     const opt = {
         margin:       0,
         filename:     'Guillermo_Reyes_CV_Eng.pdf',
         image:        { type: 'jpeg', quality: 1 },
         html2canvas:  { scale: 2, useCORS: true, windowWidth: 1200 },
-        jsPDF:        { unit: 'mm', format: [291, 385], orientation: 'portrait' }
+        jsPDF:        { unit: 'in', format: [11.5, 17.5], orientation: 'portrait' }
     };
 
     html2pdf().set(opt).from(element).save().then(() => {
         $("#message").text("Download complete!");
+        element.style.width = originalWidth;
         
         setTimeout(() => {
             $("#overlay").hide();
@@ -51,6 +57,7 @@ const downloadPDF = () => {
     }).catch(err => {
         console.error("Error generating PDF:", err);
         $("#message").text("Error generating PDF.");
+        element.style.width = originalWidth;
         
         setTimeout(() => {
             $("#overlay").hide();
