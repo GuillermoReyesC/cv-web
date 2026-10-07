@@ -233,19 +233,19 @@ body {
 }
 
 .about {
-    margin-bottom: 45px;
+    margin-bottom: 25px;
 }
 
 .about p {
     color: #4b5563;
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 .about .box {
     display: flex;
     flex-direction: row;
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
 .about .box .year_company {
