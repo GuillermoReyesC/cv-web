@@ -38,27 +38,47 @@ const downloadPDF = () => {
 
     const element = document.querySelector('.container');
     
+    // Guardar estilos originales
+    const originalWidth = element.style.width;
+    const originalMaxWidth = element.style.maxWidth;
+    const originalMargin = element.style.margin;
+    
+    // Forzar el diseño de escritorio para evitar que se renderice la versión móvil
+    element.style.width = '1100px';
+    element.style.maxWidth = '1100px';
+    element.style.margin = '0'; // Quitar margen para no sumar altura extra
+    
+    // Configurar html2pdf con el tamaño exacto del contenedor forzado
     const opt = {
-        margin:       [0, 0, 0, 0], // Margen 0
+        margin:       0,
         filename:     'Guillermo_Reyes_CV.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true }, // scale 2 mejora la calidad
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        html2canvas:  { scale: 2, useCORS: true, windowWidth: 1100 },
+        jsPDF:        { unit: 'px', format: [1100, element.scrollHeight], orientation: 'portrait' }
     };
 
     // Usar html2pdf
     html2pdf().set(opt).from(element).save().then(() => {
-        // Al terminar:
         $("#message").text("¡Descarga completada!");
         
+        // Restaurar estilos originales
+        element.style.width = originalWidth;
+        element.style.maxWidth = originalMaxWidth;
+        element.style.margin = originalMargin;
+
         setTimeout(() => {
             $("#overlay").hide();
-            // Restaurar botón flotante
             $("#floating-button").show();
         }, 1500);
     }).catch(err => {
         console.error("Error al generar PDF:", err);
         $("#message").text("Error al generar el PDF.");
+        
+        // Restaurar estilos en caso de error
+        element.style.width = originalWidth;
+        element.style.maxWidth = originalMaxWidth;
+        element.style.margin = originalMargin;
+
         setTimeout(() => {
             $("#overlay").hide();
             $("#floating-button").show();
