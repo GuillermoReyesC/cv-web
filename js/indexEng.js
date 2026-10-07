@@ -38,34 +38,21 @@ const downloadPDF = () => {
 
     const element = document.querySelector('.container');
     
-    // Guardar estilos originales
-    const originalWidth = element.style.width;
-    const originalMaxWidth = element.style.maxWidth;
-    const originalMargin = element.style.margin;
-    
-    // Forzar el diseño de escritorio para evitar que se renderice la versión móvil
-    element.style.width = '1100px';
-    element.style.maxWidth = '1100px';
-    element.style.margin = '0'; // Quitar margen para no sumar altura extra
-    
-    // Configurar html2pdf con el tamaño exacto del contenedor forzado
+    // Configurar html2pdf usando el tamaño real sin alterar el DOM de forma destructiva
     const opt = {
-        margin:       0,
+        margin:       [10, 0, 10, 0], // Margen arriba y abajo
         filename:     'Guillermo_Reyes_CV_Eng.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, windowWidth: 1100 },
-        jsPDF:        { unit: 'px', format: [1100, element.scrollHeight], orientation: 'portrait' }
+        image:        { type: 'jpeg', quality: 1 },
+        // windowWidth fuerza la vista de escritorio para que nunca se tome la versión móvil
+        html2canvas:  { scale: 2, useCORS: true, windowWidth: 1200 },
+        // Creamos una página personalizada que se adapta a la altura del contenido
+        jsPDF:        { unit: 'px', format: [1200, element.scrollHeight + 50], orientation: 'portrait' }
     };
 
     // Usar html2pdf
     html2pdf().set(opt).from(element).save().then(() => {
         $("#message").text("Download complete!");
         
-        // Restaurar estilos originales
-        element.style.width = originalWidth;
-        element.style.maxWidth = originalMaxWidth;
-        element.style.margin = originalMargin;
-
         setTimeout(() => {
             $("#overlay").hide();
             $("#floating-button").show();
@@ -74,11 +61,6 @@ const downloadPDF = () => {
         console.error("Error generating PDF:", err);
         $("#message").text("Error generating PDF.");
         
-        // Restaurar estilos
-        element.style.width = originalWidth;
-        element.style.maxWidth = originalMaxWidth;
-        element.style.margin = originalMargin;
-
         setTimeout(() => {
             $("#overlay").hide();
             $("#floating-button").show();
