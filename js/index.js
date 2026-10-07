@@ -38,15 +38,21 @@ const downloadPDF = () => {
 
     const element = document.querySelector('.container');
     
-    // Configurar html2pdf usando el tamaño real sin alterar el DOM de forma destructiva
+    // Obtenemos las dimensiones en pixeles
+    const w_px = element.offsetWidth;
+    const h_px = element.offsetHeight;
+
+    // jsPDF es muy estable con milímetros. Convertimos los píxeles a mm (1 px = 0.264583 mm)
+    // Le damos un margen pequeñísimo extra de alto para que no haya desbordamiento
+    const w_mm = w_px * 0.264583;
+    const h_mm = (h_px + 20) * 0.264583;
+
     const opt = {
-        margin:       [10, 0, 10, 0], // Margen arriba y abajo
+        margin:       0,
         filename:     'Guillermo_Reyes_CV.pdf',
         image:        { type: 'jpeg', quality: 1 },
-        // windowWidth fuerza la vista de escritorio para que nunca se tome la versión móvil
-        html2canvas:  { scale: 2, useCORS: true, windowWidth: 1200 },
-        // Creamos una página personalizada que se adapta a la altura del contenido
-        jsPDF:        { unit: 'px', format: [1200, element.scrollHeight + 50], orientation: 'portrait' }
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'mm', format: [w_mm, h_mm], orientation: 'portrait' }
     };
 
     // Usar html2pdf
