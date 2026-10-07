@@ -38,13 +38,16 @@ const downloadPDF = () => {
 
     const element = document.querySelector('.container');
     
-    // Configuraciones de html2pdf
+    // We take the exact dimensions of the container to export as 1 single continuous page
+    const width = element.offsetWidth;
+    const height = element.offsetHeight;
+
     const opt = {
-        margin:       [0, 0, 0, 0], // Margen 0
+        margin:       0,
         filename:     'Guillermo_Reyes_CV_Eng.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true }, // scale 2 mejora la calidad
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'px', format: [width, height], orientation: 'portrait' }
     };
 
     // Usar html2pdf
