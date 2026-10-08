@@ -27,71 +27,66 @@ $("#btn-download-pdf").on("click", function() {
 
 const downloadPDF = () => {
     $("#floating-button").hide();
+    
     $("#overlay").css("display", "flex");
     $("#message").text("Generando PDF de tu CV...");
 
     const element = document.querySelector('.container');
-
+    
+    // Guardamos los estilos originales
     const originalWidth = element.style.width;
     const originalMaxWidth = element.style.maxWidth;
     const originalMargin = element.style.margin;
 
-    const restore = () => {
-        element.style.width = originalWidth;
-        element.style.maxWidth = originalMaxWidth;
-        element.style.margin = originalMargin;
-    };
-
+    // Forzamos la vista de escritorio y quitamos márgenes para evitar recortes en html2canvas
     element.style.width = '1100px';
     element.style.maxWidth = '1100px';
     element.style.margin = '0';
-    window.scrollTo(0, 0);
 
+    // Damos un pequeño respiro al navegador para aplicar los estilos
     setTimeout(() => {
+        const width = element.offsetWidth;
+        const height = element.offsetHeight;
+        const ratio = height / width;
+        
+        const pdfWidth = 210;
+        const pdfHeight = pdfWidth * ratio;
+
         const opt = {
-            html2canvas: {
-                scale: 2,
-                useCORS: true,
-                windowWidth: 1100,
-                scrollX: 0,
-                scrollY: 0
-            }
+            margin:       0,
+            filename:     'Guillermo_Reyes_CV.pdf',
+            image:        { type: 'jpeg', quality: 1 },
+            html2canvas:  { scale: 2, useCORS: true, windowWidth: 1100 },
+            jsPDF:        { unit: 'mm', format: [pdfWidth, pdfHeight], orientation: 'portrait' }
         };
 
-        let canvas;
+        html2pdf().set(opt).from(element).save().then(() => {
+            $("#message").text("¡Descarga completada!");
+            
+            // Restauramos los estilos
+            element.style.width = originalWidth;
+            element.style.maxWidth = originalMaxWidth;
+            element.style.margin = originalMargin;
 
-        html2pdf().set(opt).from(element)
-            .toCanvas().get('canvas').then(c => { canvas = c; })
-            .toPdf().get('pdf').then(tmp => {
-                const pdf = new tmp.constructor({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+            setTimeout(() => {
+                $("#overlay").hide();
+                $("#floating-button").show();
+            }, 1500);
+        }).catch(err => {
+            console.error("Error al generar PDF:", err);
+            $("#message").text("Error al generar el PDF.");
 
-                const pageW = 210, pageH = 297;
-                const scale = Math.min(pageW / canvas.width, pageH / canvas.height);
-                const w = canvas.width * scale;
-                const h = canvas.height * scale;
-                const x = (pageW - w) / 2;
-
-                pdf.addImage(canvas.toDataURL('image/jpeg', 1), 'JPEG', x, 0, w, h);
-                pdf.save('Guillermo_Reyes_CV.pdf');
-            })
-            .then(() => {
-                $("#message").text("¡Descarga completada!");
-                restore();
-                setTimeout(() => {
-                    $("#overlay").hide();
-                    $("#floating-button").show();
-                }, 1500);
-            })
-            .catch(err => {
-                console.error("Error al generar PDF:", err);
-                $("#message").text("Error al generar el PDF.");
-                restore();
-                setTimeout(() => {
-                    $("#overlay").hide();
-                    $("#floating-button").show();
-                }, 2000);
-            });
+            element.style.width = originalWidth;
+            element.style.maxWidth = originalMaxWidth;
+            element.style.margin = originalMargin;
+            
+            setTimeout(() => {
+                $("#overlay").hide();
+                $("#floating-button").show();
+            }, 2000);
+        });
     }, 100);
+
 };
 
 $("#btn-english").on("click", function() {
