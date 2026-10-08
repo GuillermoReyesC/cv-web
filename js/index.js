@@ -39,7 +39,7 @@ const downloadPDF = () => {
     cloneWrapper.style.position = 'absolute';
     cloneWrapper.style.top = '0';
     cloneWrapper.style.left = '0';
-    cloneWrapper.style.width = '1100px';
+    cloneWrapper.style.width = '900px';
     cloneWrapper.style.zIndex = '-9999';
     cloneWrapper.style.background = '#e9ecef'; 
 
