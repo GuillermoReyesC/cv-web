@@ -51,34 +51,40 @@ const downloadPDF = () => {
     cloneWrapper.appendChild(clone);
     document.body.appendChild(cloneWrapper);
 
-    const opt = {
-        margin:       0,
-        filename:     'Guillermo_Reyes_CV.pdf',
-        image:        { type: 'jpeg', quality: 1 },
-        html2canvas:  { scale: 2, useCORS: true, windowWidth: 1100 }
+    const removeClone = () => {
+        if (cloneWrapper.parentNode) {
+            cloneWrapper.parentNode.removeChild(cloneWrapper);
+        }
     };
 
-    // Usamos el API de promesas de html2pdf para capturar el canvas EXACTO
-    html2pdf()
-        .set(opt)
-        .from(clone)
-        .toCanvas()
-        .get('canvas')
-        .then((canvas) => {
-            // El canvas tiene las medidas precisas renderizadas.
-            const widthPx = canvas.width / 2;
-            const heightPx = canvas.height / 2;
-            
-            // Creamos un PDF del tamaño exacto en pixeles (esto EVITA la paginación a 2 hojas)
+    Promise.all([
+        document.fonts.ready,
+        ...Array.from(clone.querySelectorAll('img'), image => image.decode())
+    ])
+        .then(() => {
+            const width = clone.getBoundingClientRect().width;
+            const height = Math.max(clone.scrollHeight, clone.getBoundingClientRect().height);
+
             return html2pdf().set({
                 margin: 0,
                 filename: 'Guillermo_Reyes_CV.pdf',
                 image: { type: 'jpeg', quality: 1 },
-                jsPDF: { unit: 'px', format: [widthPx, heightPx], orientation: 'portrait' }
-            }).from(canvas).save();
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    windowWidth: 1100,
+                    windowHeight: height,
+                    scrollY: 0
+                },
+                jsPDF: {
+                    unit: 'px',
+                    format: [width, height],
+                    orientation: 'portrait'
+                }
+            }).from(clone).save();
         })
         .then(() => {
-            document.body.removeChild(cloneWrapper);
+            removeClone();
             $("#message").text("¡Descarga completada!");
             setTimeout(() => {
                 $("#overlay").hide();
@@ -87,7 +93,7 @@ const downloadPDF = () => {
         })
         .catch(err => {
             console.error("Error al generar PDF:", err);
-            document.body.removeChild(cloneWrapper);
+            removeClone();
             $("#message").text("Error al generar el PDF.");
             setTimeout(() => {
                 $("#overlay").hide();
