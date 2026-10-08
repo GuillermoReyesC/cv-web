@@ -33,28 +33,28 @@ const downloadPDF = () => {
 
     const element = document.querySelector('.container');
     
-    // Guardamos los estilos originales para no romper el layout permanentemente
+    // Guardamos estilos
     const originalWidth = element.style.width;
     const originalMaxWidth = element.style.maxWidth;
 
-    // Forzamos el ancho a escritorio (1100px) momentáneamente
+    // Forzamos 1100px para que el DOM se acomode como en PC y podamos medir la altura real
     element.style.width = '1100px';
     element.style.maxWidth = '1100px';
 
-    const width = element.offsetWidth;
-    const height = element.offsetHeight;
-    const ratio = height / width;
+    const canvasWidth = 1100;
+    const canvasHeight = element.offsetHeight;
     
-    // Fijamos el ancho estándar (ej. 210mm) y calculamos el alto proporcional
-    const pdfWidth = 210; 
-    const pdfHeight = pdfWidth * ratio;
+    // jsPDF funciona perfecto con puntos (pt). 1 pixel CSS = 0.75 puntos.
+    // Le sumamos 20px de margen inferior al canvasHeight para asegurar que nada rebase la página.
+    const pdfWidth = canvasWidth * 0.75;
+    const pdfHeight = (canvasHeight + 20) * 0.75;
 
     const opt = {
         margin:       0,
         filename:     'Guillermo_Reyes_CV.pdf',
         image:        { type: 'jpeg', quality: 1 },
         html2canvas:  { scale: 2, useCORS: true, windowWidth: 1100 },
-        jsPDF:        { unit: 'mm', format: [pdfWidth, pdfHeight], orientation: 'portrait' }
+        jsPDF:        { unit: 'pt', format: [pdfWidth, pdfHeight], orientation: 'portrait' }
     };
 
     html2pdf().set(opt).from(element).save().then(() => {
