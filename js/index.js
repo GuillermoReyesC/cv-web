@@ -33,21 +33,19 @@ const downloadPDF = () => {
 
     const originalElement = document.querySelector('.container');
     
-    // Creamos un wrapper oculto que fuerza la vista PC desde el eje X=0
-    // Esto garantiza que html2canvas no recorte ni la izquierda ni la derecha.
+    // debe ser de una sola hoja, pero debe verse todo el contenido.
     const cloneWrapper = document.createElement('div');
     cloneWrapper.style.position = 'absolute';
     cloneWrapper.style.top = '0';
     cloneWrapper.style.left = '0';
-    cloneWrapper.style.width = '900px';
+    cloneWrapper.style.width = '1100px';
     cloneWrapper.style.zIndex = '-9999';
-    cloneWrapper.style.background = '#e9ecef'; 
-
+    cloneWrapper.style.background = '#e9ecef';
+        
     const clone = originalElement.cloneNode(true);
     clone.style.margin = '0'; // Quita el centrado automático para evitar desfases
-    clone.style.width = '1100px';
-    clone.style.maxWidth = '1100px';
-    
+    clone.style.width = '900px';
+    clone.style.maxWidth = '1000px';
     cloneWrapper.appendChild(clone);
     document.body.appendChild(cloneWrapper);
 
