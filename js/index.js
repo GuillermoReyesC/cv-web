@@ -31,62 +31,69 @@ const downloadPDF = () => {
     $("#overlay").css("display", "flex");
     $("#message").text("Generando PDF de tu CV...");
 
-    const element = document.querySelector('.container');
+    const originalElement = document.querySelector('.container');
     
-    // Guardamos los estilos originales
-    const originalWidth = element.style.width;
-    const originalMaxWidth = element.style.maxWidth;
-    const originalMargin = element.style.margin;
+    // Creamos un wrapper oculto que fuerza la vista PC desde el eje X=0
+    // Esto garantiza que html2canvas no recorte ni la izquierda ni la derecha.
+    const cloneWrapper = document.createElement('div');
+    cloneWrapper.style.position = 'absolute';
+    cloneWrapper.style.top = '0';
+    cloneWrapper.style.left = '0';
+    cloneWrapper.style.width = '1100px';
+    cloneWrapper.style.zIndex = '-9999';
+    cloneWrapper.style.background = '#e9ecef'; 
 
-    // Forzamos la vista de escritorio y quitamos márgenes para evitar recortes en html2canvas
-    element.style.width = '1100px';
-    element.style.maxWidth = '1100px';
-    element.style.margin = '0';
+    const clone = originalElement.cloneNode(true);
+    clone.style.margin = '0'; // Quita el centrado automático para evitar desfases
+    clone.style.width = '1100px';
+    clone.style.maxWidth = '1100px';
+    
+    cloneWrapper.appendChild(clone);
+    document.body.appendChild(cloneWrapper);
 
-    // Damos un pequeño respiro al navegador para aplicar los estilos
-    setTimeout(() => {
-        const width = element.offsetWidth;
-        const height = element.offsetHeight;
-        const ratio = height / width;
-        
-        const pdfWidth = 210;
-        const pdfHeight = pdfWidth * ratio;
+    const opt = {
+        margin:       0,
+        filename:     'Guillermo_Reyes_CV.pdf',
+        image:        { type: 'jpeg', quality: 1 },
+        html2canvas:  { scale: 2, useCORS: true, windowWidth: 1100 }
+    };
 
-        const opt = {
-            margin:       0,
-            filename:     'Guillermo_Reyes_CV.pdf',
-            image:        { type: 'jpeg', quality: 1 },
-            html2canvas:  { scale: 2, useCORS: true, windowWidth: 1100 },
-            jsPDF:        { unit: 'mm', format: [pdfWidth, pdfHeight], orientation: 'portrait' }
-        };
-
-        html2pdf().set(opt).from(element).save().then(() => {
-            $("#message").text("¡Descarga completada!");
+    // Usamos el API de promesas de html2pdf para capturar el canvas EXACTO
+    html2pdf()
+        .set(opt)
+        .from(clone)
+        .toCanvas()
+        .get('canvas')
+        .then((canvas) => {
+            // El canvas tiene las medidas precisas renderizadas.
+            const widthPx = canvas.width / 2;
+            const heightPx = canvas.height / 2;
             
-            // Restauramos los estilos
-            element.style.width = originalWidth;
-            element.style.maxWidth = originalMaxWidth;
-            element.style.margin = originalMargin;
-
+            // Creamos un PDF del tamaño exacto en pixeles (esto EVITA la paginación a 2 hojas)
+            return html2pdf().set({
+                margin: 0,
+                filename: 'Guillermo_Reyes_CV.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                jsPDF: { unit: 'px', format: [widthPx, heightPx], orientation: 'portrait' }
+            }).from(canvas).save();
+        })
+        .then(() => {
+            document.body.removeChild(cloneWrapper);
+            $("#message").text("¡Descarga completada!");
             setTimeout(() => {
                 $("#overlay").hide();
                 $("#floating-button").show();
             }, 1500);
-        }).catch(err => {
+        })
+        .catch(err => {
             console.error("Error al generar PDF:", err);
+            document.body.removeChild(cloneWrapper);
             $("#message").text("Error al generar el PDF.");
-
-            element.style.width = originalWidth;
-            element.style.maxWidth = originalMaxWidth;
-            element.style.margin = originalMargin;
-            
             setTimeout(() => {
                 $("#overlay").hide();
                 $("#floating-button").show();
             }, 2000);
         });
-    }, 100);
-
 };
 
 $("#btn-english").on("click", function() {
