@@ -37,7 +37,7 @@ const downloadPDF = () => {
     const cloneWrapper = document.createElement('div');
     cloneWrapper.style.position = 'absolute';
     cloneWrapper.style.top = '0';
-    cloneWrapper.style.left = '0';
+    cloneWrapper.style.left = auto;
     cloneWrapper.style.width = '1100px';
     cloneWrapper.style.zIndex = '-9999';
     cloneWrapper.style.background = '#e9ecef';
@@ -45,7 +45,7 @@ const downloadPDF = () => {
     const clone = originalElement.cloneNode(true);
     clone.style.margin = '0'; // Quita el centrado automático para evitar desfases
     clone.style.width = '900px';
-    clone.style.maxWidth = '1000px';
+    clone.style.maxWidth = '900px';
     cloneWrapper.appendChild(clone);
     document.body.appendChild(cloneWrapper);
 
