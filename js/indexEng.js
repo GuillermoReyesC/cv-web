@@ -50,6 +50,13 @@ const downloadPDF = () => {
     clone.style.margin = '0';
     clone.style.width = '1100px';
     clone.style.maxWidth = '1100px';
+    clone.style.gridTemplateColumns = '1fr 2.2fr';
+    clone.querySelectorAll('.about .box').forEach(box => {
+        box.style.flexDirection = 'row';
+    });
+    clone.querySelectorAll('.interest ul').forEach(list => {
+        list.style.gridTemplateColumns = 'repeat(3, 1fr)';
+    });
     
     cloneWrapper.appendChild(clone);
     document.body.appendChild(cloneWrapper);
@@ -65,14 +72,16 @@ const downloadPDF = () => {
         ...Array.from(clone.querySelectorAll('img'), image => image.decode())
     ])
         .then(() => {
+            const width = Math.ceil(clone.getBoundingClientRect().width);
             const height = Math.max(clone.scrollHeight, clone.getBoundingClientRect().height);
 
             return html2pdf()
                 .set({
                     html2canvas: {
-                        scale: 2,
+                        scale: 1.5,
                         useCORS: true,
-                        windowWidth: 1100,
+                        width,
+                        windowWidth: width,
                         windowHeight: height,
                         scrollX: 0,
                         scrollY: 0
@@ -95,7 +104,14 @@ const downloadPDF = () => {
                         format: [pageWidthMm, pageHeightMm]
                     });
 
-                    pdf.addImage(canvas, 'JPEG', 0, 0, pageWidthMm, pageHeightMm);
+                    pdf.addImage(
+                        canvas.toDataURL('image/jpeg', 0.95),
+                        'JPEG',
+                        0,
+                        0,
+                        pageWidthMm,
+                        pageHeightMm
+                    );
                     pdf.save('Guillermo_Reyes_CV_Eng.pdf');
                 });
         })
