@@ -43,7 +43,7 @@ const downloadPDF = () => {
     cloneWrapper.style.top = '0';
     cloneWrapper.style.left = '0';
     cloneWrapper.style.width = '1100px';
-    cloneWrapper.style.zIndex = '-9999';
+    cloneWrapper.style.zIndex = '1';
     cloneWrapper.style.background = '#fff';
 
     const clone = originalElement.cloneNode(true);
@@ -75,25 +75,18 @@ const downloadPDF = () => {
             const width = Math.ceil(clone.getBoundingClientRect().width);
             const height = Math.max(clone.scrollHeight, clone.getBoundingClientRect().height);
 
-            return html2pdf()
-                .set({
-                    html2canvas: {
-                        scale: 1.5,
-                        useCORS: true,
-                        width,
-                        windowWidth: width,
-                        windowHeight: height,
-                        scrollX: 0,
-                        scrollY: 0
-                    }
-                })
-                .from(clone)
-                .toCanvas()
-                .get('canvas')
-                .then(canvas => {
+            return window.html2canvas(clone, {
+                scale: 1.5,
+                useCORS: true,
+                width,
+                windowWidth: width,
+                windowHeight: height,
+                scrollX: 0,
+                scrollY: 0
+            }).then(canvas => {
                     const JsPDF = window.jspdf?.jsPDF;
                     if (!JsPDF) {
-                        throw new Error('jsPDF was not found in html2pdf.bundle.');
+                        throw new Error('jsPDF was not found on the page.');
                     }
 
                     const pageWidthMm = 210;
